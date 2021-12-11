@@ -1,7 +1,6 @@
 package short
 
 import (
-	"fmt"
 	"gin-template/base"
 	"gin-template/config"
 	"gin-template/util/db"
@@ -35,11 +34,10 @@ func (s Shorter) i() {
 
 func (s Shorter) ShortURL(longURL, note string) (string, error) {
 	//_, err := url.Parse(longURL)
-	pase, err := url.ParseRequestURI(longURL)
+	_, err := url.ParseRequestURI(longURL)
 	if err != nil {
 		return "", errors.Wrap(err, "requested url is malformed")
 	}
-	fmt.Print(pase)
 	sequence := NewSequence()
 	conf := config.Get()
 	var shortStr string
