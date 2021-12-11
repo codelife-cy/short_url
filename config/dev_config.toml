@@ -18,15 +18,15 @@
     max_open_conn = 10
   # mysql 读配置
   [mysql.read]
-    addr = "10.10.1.35:3306"
+    addr = "192.168.93.131:3306"
     name = "short_url"
-    pass = "Leyun123"
+    pass = "root"
     user = "root"
   # mysql写配置
   [mysql.write]
-    addr = "10.10.1.35:3306"
+    addr = "192.168.93.131:3306"
     name = "short_url"
-    pass = "Leyun123"
+    pass = "root"
     user = "root"
 # redis 配置
 [redis]
