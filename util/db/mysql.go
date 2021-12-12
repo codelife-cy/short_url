@@ -43,6 +43,7 @@ func newDb() (Repo, error) {
 }
 
 func init() {
+	// 所有请求使用一个对象，数据库连接池由gorm管理
 	Db, _ = newDb()
 }
 

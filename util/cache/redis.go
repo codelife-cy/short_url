@@ -7,6 +7,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+var RedisCache Repo
+
 type Repo interface {
 	i()
 	GetClient() *redis.Client
@@ -16,12 +18,16 @@ type redisRepo struct {
 	client *redis.Client
 }
 
-func New() (Repo, error) {
+func newRedis() (Repo, error) {
 	connect, err := redisConnect()
 	if err != nil {
 		return nil, err
 	}
 	return &redisRepo{client: connect}, nil
+}
+
+func init() {
+	RedisCache, _ = newRedis()
 }
 
 // redisConnect 连接redis
