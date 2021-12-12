@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var RedisCache Repo
+var client *redis.Client
 
 type Repo interface {
 	i()
@@ -27,7 +27,8 @@ func newRedis() (Repo, error) {
 }
 
 func init() {
-	RedisCache, _ = newRedis()
+	repo, _ := newRedis()
+	client = repo.GetClient()
 }
 
 // redisConnect 连接redis
