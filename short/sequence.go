@@ -9,7 +9,7 @@ type SequenceDB struct {
 }
 
 func NewSequence() SequenceDB {
-	repo, _ := db.New()
+	repo := db.Db
 	return SequenceDB{db: repo}
 }
 

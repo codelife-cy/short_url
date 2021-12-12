@@ -10,14 +10,12 @@ import (
 	"gorm.io/driver/mysql"
 )
 
-//var _ Repo = (*dbRepo)(nil)
+var Db Repo
 
 type Repo interface {
 	i()
 	GetDbR() *gorm.DB
 	GetDbW() *gorm.DB
-	DbRClose() error
-	DbWClose() error
 }
 
 type dbRepo struct {
@@ -26,7 +24,7 @@ type dbRepo struct {
 }
 
 // New 创建连接
-func New() (Repo, error) {
+func newDb() (Repo, error) {
 	cfg := config.Get().MySql
 	dbr, err := dbConnect(cfg.Read.User, cfg.Read.Pass, cfg.Read.Addr, cfg.Read.Name)
 	if err != nil {
@@ -42,6 +40,10 @@ func New() (Repo, error) {
 		DbR: dbr,
 		DbW: dbw,
 	}, nil
+}
+
+func init() {
+	Db, _ = newDb()
 }
 
 // dbConnect 数据库连接
@@ -94,20 +96,4 @@ func (d *dbRepo) GetDbR() *gorm.DB {
 
 func (d *dbRepo) GetDbW() *gorm.DB {
 	return d.DbW
-}
-
-func (d *dbRepo) DbRClose() error {
-	sqlDB, err := d.DbR.DB()
-	if err != nil {
-		return err
-	}
-	return sqlDB.Close()
-}
-
-func (d *dbRepo) DbWClose() error {
-	sqlDB, err := d.DbW.DB()
-	if err != nil {
-		return err
-	}
-	return sqlDB.Close()
 }

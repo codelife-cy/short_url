@@ -5,7 +5,9 @@ import (
 	"gin-template/util/bind"
 	"gin-template/util/response"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
+	"regexp"
 )
 
 func RouterShort(group *gin.RouterGroup) {
@@ -28,8 +30,29 @@ func RouterShort(group *gin.RouterGroup) {
 		}
 	})
 
-	group.GET("/", func(context *gin.Context) {
-
+	/**
+	访问短域名重定向到长域名地址
+	*/
+	group.GET("/:shortURL", func(context *gin.Context) {
+		param := context.Param("shortURL")
+		pat := `^[a-zA-Z0-9]{1,11}$`
+		compile := regexp.MustCompile(pat)
+		// 判断是否是短域名请求
+		if ok := compile.MatchString(param); !ok {
+			return
+		}
+		shorter := short.NewShorter()
+		expand, err := shorter.Expand(param)
+		if err != nil {
+			log.Printf("redirect short url error. %v", err)
+			context.Error(err)
+			return
+		}
+		if len(expand) != 0 {
+			context.Redirect(http.StatusTemporaryRedirect, expand)
+		} else {
+			context.Writer.WriteHeader(http.StatusNoContent)
+		}
 	})
 
 }

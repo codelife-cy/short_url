@@ -22,7 +22,7 @@ type Shorter struct {
 }
 
 func NewShorter() Shorter {
-	repo, _ := db.New()
+	repo := db.Db
 	return Shorter{
 		db: repo,
 	}
@@ -72,7 +72,11 @@ func (s Shorter) ShortURL(longURL, note string) (string, error) {
 }
 
 func (s Shorter) Expand(shortURL string) (string, error) {
-	panic("implement me")
+	reader := s.db.GetDbR()
+	shorterTable := new(ShorterTable)
+	find := reader.Where(&ShorterTable{ShortUrl: shortURL}).Find(shorterTable)
+	longUrl := shorterTable.LongUrl
+	return longUrl, errors.Wrap(find.Error, "find shortURL err")
 }
 
 func (s Shorter) UpdateURL(shortURL, longURL string) (bool, error) {
