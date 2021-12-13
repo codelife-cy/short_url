@@ -7,7 +7,6 @@ import (
 	"github.com/pkg/errors"
 	"log"
 	"net/url"
-	"time"
 )
 
 type Short interface {
@@ -57,10 +56,9 @@ func (s Shorter) ShortURL(longURL, note string) (string, error) {
 	}
 	writer := s.db.GetDbW()
 	shorterTable := &ShorterTable{
-		ShortUrl:   shortStr,
-		LongUrl:    longURL,
-		Note:       note,
-		CreateTime: time.Now(),
+		ShortUrl: shortStr,
+		LongUrl:  longURL,
+		Note:     note,
 	}
 	create := writer.Create(shorterTable)
 	if create.Error != nil {

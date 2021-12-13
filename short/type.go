@@ -1,6 +1,8 @@
 package short
 
-import "time"
+import (
+	"time"
+)
 
 type Req struct {
 	ShortURL string `json:"shortURL"`
@@ -15,7 +17,7 @@ type Resp struct {
 }
 
 type SequenceTable struct {
-	Id        uint64 `gorm:"primary_key"`
+	ID        uint `gorm:"primarykey"`
 	Stub      string
 	Timestamp time.Time
 }
@@ -25,11 +27,11 @@ func (SequenceTable) TableName() string {
 }
 
 type ShorterTable struct {
-	Id         uint64 `gorm:"primary_key"`
-	LongUrl    string
-	ShortUrl   string
-	Note       string
-	CreateTime time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	LongUrl   string
+	ShortUrl  string
+	Note      string
 }
 
 func (ShorterTable) TableName() string {

@@ -5,13 +5,13 @@ import (
 	"math"
 )
 
-func CreateShortStr(seq uint64) (shortURL string) {
+func CreateShortStr(seq uint) (shortURL string) {
 	conf := config.Get()
-	baseStrLen := uint64(len(conf.Common.BaseString))
+	baseStrLen := uint(len(conf.Common.BaseString))
 	domainLen := conf.Common.DomainLength
 	charSeq := make([]rune, 0, domainLen)
 	num := math.Pow(float64(baseStrLen), float64(domainLen-1))
-	seq = uint64(num) + seq
+	seq = uint(num) + seq
 	if seq != 0 {
 		for seq != 0 {
 			mod := seq % baseStrLen
