@@ -97,14 +97,14 @@ domain_length = 5
 
 1. 获取端域名
 
-![获取短域名](D:\code_go\short-url\image\获取短域名.png)
+![获取短域名](.\image\获取短域名.png)
 
 2. 使用短域名
 
-![使用短域名URL](D:\code_go\short-url\image\使用短域名URL.png)
+![使用短域名URL](.\image\使用短域名URL.png)
 
-![使用短域名URL结果](D:\code_go\short-url\image\使用短域名URL结果.png)
+![使用短域名URL结果](.\image\使用短域名URL结果.png)
 
 项目结构：
 
-![项目结构](D:\code_go\short-url\image\项目结构.png)
+![项目结构](.\image\项目结构.png)
